@@ -18,3 +18,13 @@ start:
 
     kld(de, corelib_path)
     pcall(loadLibrary)
+
+;------Data-------
+
+corelib_path:
+
+    .db "/lib/core", 0
+
+window_title:
+
+    .db "WizardC8", 0
