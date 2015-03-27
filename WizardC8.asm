@@ -27,6 +27,19 @@ start:
     kld(hl, window_title)
     xor a
     corelib(drawWindow)
+    
+    kld(hl, message)
+    ld d, 2
+    ld e, 8
+    pcall(drawStr)
+    
+.loop:
+
+    pcall(fastCopy)
+    
+    pcall(flushKeys)
+    
+    corelib(appWaitKey)
 
 ;------Data-------
 
@@ -37,3 +50,7 @@ corelib_path:
 window_title:
 
     .db "WizardC8", 0
+
+message:
+
+    .db "WizardC8 for KnightOS is under construction", 0
