@@ -14,5 +14,5 @@
 name:
     .db "WizardC8", 0
 
-Start:
+start:
 
