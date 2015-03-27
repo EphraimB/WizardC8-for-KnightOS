@@ -1,4 +1,3 @@
-
 #include "kernel.inc"
 #include "corelib.inc"
 
@@ -18,6 +17,16 @@ start:
 
     kld(de, corelib_path)
     pcall(loadLibrary)
+    
+    pcall(getLCDLock)
+    pcall(getKeypadLock)
+    
+    pcall(allocScreenBuffer)
+    pcall(clearBuffer)
+    
+    kld(hl, window_title)
+    xor a
+    corelib(drawWindow)
 
 ;------Data-------
 
