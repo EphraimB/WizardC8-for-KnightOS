@@ -16,3 +16,5 @@ name:
 
 start:
 
+    kld(de, corelib_path)
+    pcall(loadLibrary)
