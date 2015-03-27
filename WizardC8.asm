@@ -10,3 +10,9 @@
     .db KEXC_NAME
     .dw name
     .db KEXC_HEADER_END
+
+name:
+    .db "WizardC8", 0
+
+Start:
+
