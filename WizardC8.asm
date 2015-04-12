@@ -448,36 +448,45 @@ gallionsToDollars:
 
     add hl, de
 
-    kld(a, (valueToHideArrow))
+    push hl
 
     ld b, 3
 
     ld d, 48
     ld e, (hl)
-    push hl
+
     kld(hl, upArrow)
     pcall(putSpriteOR)
+
+    cp 1
+    jr z, ++_
+
+    cp 2
+    jr z, +++_
+
+_:
+    kld(a, (valueToHideArrow))
 
     cp 9
     kcall(z, hideArrow)
 
-    ; Todo: Don't make the up Arrow hide
-    ;       when the Sickles and Knuts
-    ;       are at 9.
+    jr +++_
 
-    ;       Also, the down Arrow shows when
-    ;       the Gallions are greater than or
-    ;       equaled to 1. The down Arrow needs
-    ;       to be hidden when the Sickles and
-    ;       Knuts are 0.
+_:
+    kld(a, (valueToHideArrow2))
 
-    ld d, 0
-    ld e, a
+    cp 16
+    kcall(z, hideArrow)
 
-    add hl, de
+    jr ++_
 
-    kld(a, (valueToHideArrow))
+_:
+    kld(a, (valueToHideArrow3))
 
+    cp 28
+    kcall(z, hideArrow)
+
+_:
     ld b, 3
 
     ld d, 87
@@ -486,9 +495,37 @@ gallionsToDollars:
     kld(hl, downArrow)
     pcall(putSpriteOR)
 
+    kld(a, (wizardCurrencyPlaceField))
+
+    cp 0
+    jr z, ++_
+
+    cp 2
+    jr z, +++_
+
+_:
+    kld(a, (valueToHideArrow2))
+
     cp 0
     kcall(z, hideArrow)
 
+    jr +++_
+
+_:
+    kld(a, (valueToHideArrow))
+
+    cp 0
+    kcall(z, hideArrow)
+
+    jr ++_
+
+_:
+    kld(a, (valueToHideArrow3))
+
+    cp 0
+    kcall(z, hideArrow)
+
+_:
     kld(hl, (gallionsValue))
     ld d, 70
     ld e, 10
@@ -592,7 +629,7 @@ sicklesIncrement:
     inc a
     kld((sicklesValue), a)
 
-    kld((valueToHideArrow), a)
+    kld((valueToHideArrow2), a)
 
     kjp(gallionsToDollars)
 
@@ -605,7 +642,7 @@ sicklesDecrement:
     dec a
     kld((sicklesValue), a)
 
-    kld((valueToHideArrow), a)
+    kld((valueToHideArrow2), a)
 
     kjp(gallionsToDollars)
 
@@ -618,7 +655,7 @@ knutsIncrement:
     inc a
     kld((knutsValue), a)
 
-    kld((valueToHideArrow), a)
+    kld((valueToHideArrow3), a)
 
     kjp(gallionsToDollars)
 
@@ -631,7 +668,7 @@ knutsDecrement:
     dec a
     kld((knutsValue), a)
 
-    kld((valueToHideArrow), a)
+    kld((valueToHideArrow3), a)
 
     kjp(gallionsToDollars)
 
@@ -1051,6 +1088,12 @@ oneCentsPlaceValue:
 valueToHideArrow:
     .db 0
 
+valueToHideArrow2:
+    .db 0
+
+valueToHideArrow3:
+    .db 0
+
 dollarsPlaceField:
     .db 0
 
@@ -1076,7 +1119,7 @@ knutsRateInDollars:
     .db 2
 
 gallionsValue:
-    .db 0, 0
+    .dw 0
 
 sicklesValue:
     .db 0
