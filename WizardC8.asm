@@ -137,6 +137,11 @@ dollarsToGallions:
     ld e, 22
     pcall(drawDecA)
 
+    kld(hl, information)
+    ld d, 2
+    ld e, 43
+    pcall(drawStr)
+
     pcall(fastCopy)
     pcall(flushKeys)
 
@@ -540,6 +545,11 @@ _:
     ld d, 70
     ld e, 32
     pcall(drawDecA)
+
+    kld(hl, information)
+    ld d, 2
+    ld e, 43
+    pcall(drawStr)
 
     pcall(fastCopy)
     pcall(flushKeys)
@@ -1072,6 +1082,9 @@ convertedResultsMenu:
 
 aboutScreenText:
     .db "Wizard Currency Converter\nVersion 8.0 Alpha\nReleased:\nApril 12th, 2015", 0
+
+information:
+    .db "Up or Down Keys to\nIncrement or Decrement", 0
 
 tenDollarsPlaceValue:
     .db 0
